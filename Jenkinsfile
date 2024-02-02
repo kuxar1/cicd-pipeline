@@ -6,7 +6,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'npm version'        
+                sh 'npm build'        
+                }
+            }
+        stage('Test') {
+            steps {
+                sh 'npm test'        
                 }
             }
         
