@@ -1,12 +1,12 @@
 pipeline {
     agent any
-
+    tools {
+        nodejs '7.8.0'
+    }
     stages {
         stage('Build') {
             steps {
-                    nodejs(nodeJSInstallationName: 'Node 7.8.0') {
-                        sh 'npm config ls'
-                    }
+                sh 'npm version'        
                 }
             }
         
