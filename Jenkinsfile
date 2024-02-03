@@ -25,5 +25,15 @@ pipeline {
                 sh "docker build -t node${BRANCH_NAME}:v1.0 ."        
                 }
             }
+        stage('Deploy') {
+            when {
+                expression {
+                    BRANCH_NAME == "dev"
+                }
+            }
+            steps {
+                sh "docker compose down && docker compose up -d"        
+                }
+            }
     }
 }
