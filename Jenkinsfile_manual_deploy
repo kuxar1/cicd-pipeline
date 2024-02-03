@@ -20,13 +20,13 @@ pipeline {
                 }
             }
         stage('Docker build') {
-            when {
-                expression {
-                    ${params.environment}
-                }
-            }
+            // when {
+            //     expression {
+            //         ${params.environment}
+            //     }
+            // }
             steps {
-                echo "${params.environment}"
+                echo "Build with ${params.environment}"
                 //sh "docker build -t node${BRANCH_NAME}:v1.0 ." 
                 }
         }
