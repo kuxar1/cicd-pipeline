@@ -7,12 +7,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "npm build"
+                sh "npm install"
                 }
             }
         stage('Test') {
             steps {
-                sh "bash ./scripts/test.sh"
+                sh "npm test"
                 }
             }
         stage('Docker build') {
