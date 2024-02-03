@@ -1,45 +1,29 @@
 pipeline {
     agent any
     tools {
-        nodejs '7.8.0'
+        nodejs "7.8.0"
     }
+    
     stages {
         stage('Build') {
             steps {
-                sh 'npm build'        
+                sh "npm build"
                 }
             }
         stage('Test') {
             steps {
-                sh 'npm test'        
+                sh "npm test" 
                 }
             }
         stage('Docker build') {
-            steps {
-                sh 'docker build -t node${BRANCH_NAME}:v1.0 .'        
+            when {
+                expression {
+                    BRANCH_NAME == "main"
                 }
             }
-        
-        // stage('Build') {
-        //     steps {
-        //         sh 'docker build -t test_js'
-        //     }
-        // }
-
-        // stage('Test') {
-        //     steps {
-        //         // Define the test steps here
-        //         // For example, using JUnit:
-        //         junit '**/target/surefire-reports/*.xml'
-        //     }
-        // }
-
-        // stage('Deploy') {
-        //     steps {
-        //         // Define deployment steps here
-        //         // For example, deploying to a server:
-        //         sh 'scp target/my-app.jar user@server:/path/to/deployment/directory/'
-        //     }
-        // }
+            steps {
+                sh "docker build -t node${BRANCH_NAME}:v1.0 ."        
+                }
+            }
     }
 }
