@@ -22,22 +22,22 @@ pipeline {
         stage('Docker build') {
             when {
                 expression {
-                    BRANCH_NAME == ${params.environment}
+                    ${params.environment}
                 }
             }
             steps {
-                echo '${params.environment}'
+                echo "${params.environment}"
                 //sh "docker build -t node${BRANCH_NAME}:v1.0 ."        
                 }
             }
         stage('Deploy') {
             when {
                 expression {
-                    BRANCH_NAME == ${params.environment}
+                    ${params.environment}
                 }
             }
             steps {
-                echo '${params.environment}'
+                echo "${params.environment}"
                 // sh "docker compose down && docker compose up -d"        
                 }
             }
