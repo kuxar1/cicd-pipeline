@@ -14,11 +14,11 @@ pipeline {
                 sh 'npm test'        
                 }
             }
-        // stage('Docker build') {
-        //     steps {
-        //         sh 'docker build -t '        
-        //         }
-        //     }
+        stage('Docker build') {
+            steps {
+                sh 'docker build -t node${BRANCH_NAME}:v1.0 .'        
+                }
+            }
         
         // stage('Build') {
         //     steps {
