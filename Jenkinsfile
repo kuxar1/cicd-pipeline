@@ -6,14 +6,19 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'bash ./scripts/build.sh'        
+                sh 'npm build'        
                 }
             }
         stage('Test') {
             steps {
-                sh 'bash ./scripts/test.sh'        
+                sh 'npm test'        
                 }
             }
+        // stage('Docker build') {
+        //     steps {
+        //         sh 'docker build -t '        
+        //         }
+        //     }
         
         // stage('Build') {
         //     steps {
