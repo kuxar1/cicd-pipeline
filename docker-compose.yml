@@ -4,4 +4,4 @@ services:
   nodemain:
     image: nodemain:v1.0
     ports:
-      - "3000:3000"
+      - "3002:3000"
