@@ -19,7 +19,7 @@ pipeline {
                 sh 'docker build -t node${BRANCH_NAME}:v1.0 .'        
                 }
             }
-        
+            
         // stage('Build') {
         //     steps {
         //         sh 'docker build -t test_js'
