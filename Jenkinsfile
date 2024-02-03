@@ -12,7 +12,7 @@ pipeline {
             }
         stage('Test') {
             steps {
-                sh "npm scripts/test"
+                sh "bash ./scripts/test.sh"
                 }
             }
         stage('Docker build') {
