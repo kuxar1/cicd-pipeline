@@ -29,5 +29,6 @@ pipeline {
                 echo "${params.environment}"
                 //sh "docker build -t node${BRANCH_NAME}:v1.0 ." 
                 }
+        }
     }
 }
