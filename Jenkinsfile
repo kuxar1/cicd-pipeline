@@ -1,8 +1,4 @@
 pipeline {
-    parameters {
-        choice(name: 'environment', choices: ['main', 'dev'], description: 'deploying environmanet')
-    }
-    // ${params.environment}
     agent any
     tools {
         nodejs "7.8.0"
