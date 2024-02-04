@@ -1,6 +1,7 @@
 pipeline {
     parameters {
         choice(name: 'environment', choices: ['main', 'dev'], description: 'deploying environmanet')
+        choice(name: 'tag', choices: ['v1.0', 'v2.0'], description: 'tag')
     }
     // ${params.environment}
     agent any
@@ -22,12 +23,11 @@ pipeline {
         stage('Docker build') {
             when {
                 expression {
-                    $BRANCH_NAME == ${params.environment}
+                    ${params.environment}
                 }
             }
             steps {
-                echo "Build with ${params.environment}"
-                //sh "docker build -t node${BRANCH_NAME}:v1.0 ." 
+                sh "docker build -t node${params.environment}:${params.tag} ." 
                 }
         }
     }
