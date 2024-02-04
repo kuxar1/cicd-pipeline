@@ -3,7 +3,6 @@ pipeline {
         choice(name: 'environment', choices: ['main', 'dev'], description: 'deploying environmanet')
         choice(name: 'tag', choices: ['v1.0', 'v2.0'], description: 'tag')
     }
-    // ${params.environment}
     agent any
     tools {
         nodejs "7.8.0"
@@ -12,37 +11,33 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                script {
-                    def currentBranch = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
-
-                    if (currentBranch in ['main', 'dev']) {
-                        echo "Running npm install on branch: ${currentBranch}"
-                        sh "npm install"
-                    } else {
-                        echo "Skipping npm install as branch is not main or dev"
-                    }
+                sh "npm install"
                 }
             }
+        stage('Test') {
+            steps {
+                sh "npm test"
+                }
+            }
+        stage('Docker build') {
+            when {
+                expression {
+                    params.environment
+                }
+            }
+            steps {
+                sh "docker build -t node${params.environment}:${params.tag} ." 
+                }
         }
-        // stage('Build') {
-        //     steps {
-        //         sh "npm install"
-        //         }
-        //     }
-        // stage('Test') {
-        //     steps {
-        //         sh "npm test"
-        //         }
-        //     }
-        // stage('Docker build') {
-        //     when {
-        //         expression {
-        //             params.environment
-        //         }
-        //     }
-        //     steps {
-        //         sh "docker build -t node${params.environment}:${params.tag} ." 
-        //         }
-        // }
+        stage('Deploy') {
+            when {
+                expression {
+                    params.environment
+                }
+            }
+            steps {
+                sh "docker run -d --expose 3000 -p 3000:3000 node${params.environment}:${params.tag}" 
+                }
+        }
     }
 }
