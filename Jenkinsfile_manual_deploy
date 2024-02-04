@@ -23,7 +23,7 @@ pipeline {
         stage('Docker build') {
             when {
                 expression {
-                    params.environment
+                    evn.BRANCH_NAME == params.environment
                 }
             }
             steps {
