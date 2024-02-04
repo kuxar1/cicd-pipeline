@@ -12,23 +12,37 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh "npm install"
+                script {
+                    def currentBranch = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
+
+                    if (currentBranch in ['main', 'dev']) {
+                        echo "Running npm install on branch: ${currentBranch}"
+                        sh "npm install"
+                    } else {
+                        echo "Skipping npm install as branch is not main or dev"
+                    }
                 }
             }
-        stage('Test') {
-            steps {
-                sh "npm test"
-                }
-            }
-        stage('Docker build') {
-            when {
-                expression {
-                    evn.BRANCH_NAME == params.environment
-                }
-            }
-            steps {
-                sh "docker build -t node${params.environment}:${params.tag} ." 
-                }
         }
+        // stage('Build') {
+        //     steps {
+        //         sh "npm install"
+        //         }
+        //     }
+        // stage('Test') {
+        //     steps {
+        //         sh "npm test"
+        //         }
+        //     }
+        // stage('Docker build') {
+        //     when {
+        //         expression {
+        //             params.environment
+        //         }
+        //     }
+        //     steps {
+        //         sh "docker build -t node${params.environment}:${params.tag} ." 
+        //         }
+        // }
     }
 }
